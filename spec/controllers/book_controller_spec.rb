@@ -50,7 +50,6 @@ RSpec.describe BooksController, typr: :controller do
   describe 'PUT #update' do
     it 'updates book title and description' do
       book = Book.create(title:'title', description: 'description')
-      # new_params = (title: 'updated title', description: 'updated desc')
       patch :update, params: { id: book.id, book: {title: 'updated title', description: 'updated desc'}}
       expect(book.reload.title).to eq 'updated title'
       expect(book.reload.description).to eq 'updated desc'

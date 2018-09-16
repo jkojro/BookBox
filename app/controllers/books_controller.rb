@@ -2,7 +2,7 @@ class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
   def index
-    @books = Book.all
+    @books = Book.all.order(title: :desc)
   end
 
   def show
@@ -14,8 +14,9 @@ class BooksController < ApplicationController
 
   def create
     @book = Book.new(book_params)
+
     if @book.save
-      redirect_to @book
+      redirect_to @book, notuce: "You've added a new book"
     else
       render :new
     end
@@ -23,16 +24,18 @@ class BooksController < ApplicationController
 
   def destroy
     @book.destroy
-    redirect_to books_path
+    redirect_to root_path, notice: 'The book is deleted'
   end
 
   def edit
   end
 
   def update
-    @book.update(book_params)
-
-    redirect_to @book
+    if @book.update(book_params)
+      redirect_to @book
+    else
+      redner :edit
+    end
   end
 
   private

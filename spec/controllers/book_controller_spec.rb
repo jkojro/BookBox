@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe BooksController, typr: :controller do
   describe 'GET #index' do
-    it 'assigns @books' do
-      book = Book.create(title:'test title', description: 'test description')
+    it 'assigns books' do
+      book = Book.create(title:'index test title', description: 'test description')
       get :index
       expect(assigns(:books)).to eq([book])
     end
@@ -52,7 +52,7 @@ RSpec.describe BooksController, typr: :controller do
       book = Book.create(title:'title', description: 'description')
       patch :update, params: { id: book.id, book: {title: 'updated title', description: 'updated desc'}}
       expect(book.reload.title).to eq 'updated title'
-      expect(book.reload.description).to eq 'updated desc'
+      expect(book.reload.description).to eq 'updated desc' 
       expect(response).to have_http_status(:redirect)
     end
   end

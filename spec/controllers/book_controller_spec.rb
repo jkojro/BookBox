@@ -1,5 +1,19 @@
 require 'rails_helper'
 
+RSpec.configure do |config|
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
+end
+
 RSpec.describe BooksController, typr: :controller do
   describe 'GET #index' do
     it 'assigns books' do
@@ -68,3 +82,4 @@ RSpec.describe BooksController, typr: :controller do
     end
   end
 end
+
